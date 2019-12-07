@@ -7,7 +7,11 @@ window.title("Start")
 window.configure(bg="grey")
 screen = ui.Canvas(window, width=400, height=150,bg="grey", bd=0, highlightthickness=0)
 screen.pack()
+#CANVAS LAYOUT
+layout_beds = ui.Frame(window,bg="grey",width = 500, height = 500)
 # variables:_START
+varx =20
+vary=40
 amount_kids = 0
 amount_beds = 0
 # widgets_1_START
@@ -17,9 +21,6 @@ amount_of_children = ui.Entry(screen, width=3)
 amount_of_beds = ui.Entry(screen, width=3)
 text_error = ui.Label(window, text="Please enter valid values", bg="red")
 text_error_2 = ui.Label(window, text="Please enter values greater than 0", bg="red")
-
-#CANVAS LAYOUT
-layout_beds = ui.Frame(window,bg="grey",width = 500, height = 500)
 # functions_2_START
 def note():
     var = str(amount_of_children.get())
@@ -47,13 +48,18 @@ def note():
 
 def exit():
     window.quit()
+def move():
+    varx = event.x
+    vary = event.y
 
 
-# widgets_2_START(quit and confirm buttons)
+# widgets_2_START(quit and confirm buttons, and more)
 confirm_button = ui.Button(screen, text="Confirm", command=note, width=6)
 quit_button = ui.Button(screen, text="Quit", command=exit, width=6)
 quit_button2 = ui.Button(layout_beds, text="Quit", command=exit, width=6)
+bed_test = ui.Button(layout_beds,text="bed",bg="cyan",command=move)
 # placements_START
+bed_test.place(x=varx,y=vary)
 quit_button2.place(x=230,y=478)
 quit_button.place(x=185, y=125)
 confirm_button.place(x=185, y=100)
