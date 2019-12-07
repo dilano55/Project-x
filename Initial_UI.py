@@ -1,12 +1,19 @@
 import tkinter as ui
 import re
+import time
 # window settings_START
+x = "ok"
 window = ui.Tk()
 window.title("Start")
 window.configure(bg="black")
 screen = ui.Canvas(window, width=400, height=150,
                    bg="black", bd=0, highlightthickness=0)
 screen.pack()
+# second window settings
+window_2 = ui.Tk()
+window_2.title("Layout")
+window_2.geometry("400x400")
+window_2.configure(bg="black")
 # variables:_START
 amount_kids = 0
 amount_beds = 0
@@ -31,6 +38,8 @@ def note():
         amount_kids = amount_of_children.get()
         text_error_2.pack_forget()
         text_error.pack_forget()
+        time.sleep(0.3)
+        window.destroy()
         if int(amount_beds) > 0 and int(amount_kids) > 0:
             print(amount_kids, amount_beds)
         elif int(amount_beds) <= 0 or int(amount_kids) <= 0:
@@ -44,7 +53,7 @@ def note():
 
 
 def exit():
-    quit()
+    window.quit()
 
 
 # widgets_2_START
@@ -57,6 +66,7 @@ text2.place(y=10, x=4)
 text3.place(y=50, x=4)
 amount_of_children.place(y=20, x=300)
 amount_of_beds.place(y=60, x=300)
-# mainloop_START
-ui.mainloop()
-print("End")
+# window1_START
+window.mainloop()
+
+# window 2 start
