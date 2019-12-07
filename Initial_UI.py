@@ -10,8 +10,8 @@ screen.pack()
 #CANVAS LAYOUT
 layout_beds = ui.Frame(window,bg="grey",width = 500, height = 500)
 # variables:_START
-varx =20
-vary=40
+varx= 20
+vary= 40
 amount_kids = 0
 amount_beds = 0
 # widgets_1_START
@@ -49,8 +49,10 @@ def note():
 def exit():
     window.quit()
 def move():
-    varx = event.x
-    vary = event.y
+    varx = window.winfo_pointerx() - window.winfo_rootx()
+    vary = window.winfo_pointery() - window.winfo_rooty()
+    bed_test.place(x=(window.winfo_pointery() - window.winfo_rooty()),y=(window.winfo_pointery() - window.winfo_rooty()))
+
 
 
 # widgets_2_START(quit and confirm buttons, and more)
