@@ -9,11 +9,15 @@ screen = ui.Canvas(window, width=400, height=150,bg="grey", bd=0, highlightthick
 screen.pack()
 #CANVAS LAYOUT
 layout_beds = ui.Frame(window,bg="grey",width = 500, height = 500)
+button_canvas = ui.Canvas(layout_beds,bg="grey")
 # variables:_START
 varx= 20
 vary= 40
 amount_kids = 0
 amount_beds = 0
+movement = False
+x = window.winfo_pointerx()
+y = window.winfo_pointery()
 # widgets_1_START
 text2 = ui.Label(screen, text='Amount of children?',font=("arial", 20), width=15, bg="grey")
 text3 = ui.Label(screen, text='Amount of beds?', font=("arial", 20), width=15, bg="grey")
@@ -33,6 +37,8 @@ def note():
         time.sleep(0.3)
         screen.pack_forget()
         layout_beds.pack()
+        button_canvas.place(x=50,y=50)
+        layout_beds.focus_set()
         
         if int(amount_beds) > 0 and int(amount_kids) > 0:
             print(amount_kids, amount_beds)
@@ -44,14 +50,28 @@ def note():
         print("please enter valid values")
         text_error_2.pack_forget()
         text_error.pack()
-
-
+def mouseclick(event):
+    global x,y
+    x = event.x
+    y = event.y
+    return True
 def exit():
     window.quit()
-def move():
-    varx = window.winfo_pointerx() - window.winfo_rootx()
-    vary = window.winfo_pointery() - window.winfo_rooty()
-    bed_test.place(x=(window.winfo_pointery() - window.winfo_rooty()),y=(window.winfo_pointery() - window.winfo_rooty()))
+def move_it():
+    # varx = window.winfo_pointerx() - window.winfo_rootx()
+    # vary = window.winfo_pointery() - window.winfo_rooty()
+    bed_test.pack_forget()
+    button_canvas.place_forget()
+    if mouseclick:
+        print("clicked")
+        bed_test.pack()
+        button_canvas.place(x=(x+10),y=(y+10))
+
+
+    
+#BINDS
+layout_beds.bind("<Key>",mouseclick)
+# button_canvas.bind("<Key>",mouseclick)
 
 
 
@@ -59,9 +79,9 @@ def move():
 confirm_button = ui.Button(screen, text="Confirm", command=note, width=6)
 quit_button = ui.Button(screen, text="Quit", command=exit, width=6)
 quit_button2 = ui.Button(layout_beds, text="Quit", command=exit, width=6)
-bed_test = ui.Button(layout_beds,text="bed",bg="cyan",command=move)
+bed_test = ui.Button(button_canvas,text="bed",bg="cyan",command=move_it)
 # placements_START
-bed_test.place(x=varx,y=vary)
+bed_test.pack()
 quit_button2.place(x=230,y=478)
 quit_button.place(x=185, y=125)
 confirm_button.place(x=185, y=100)
