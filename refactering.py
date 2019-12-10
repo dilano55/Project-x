@@ -4,7 +4,7 @@ import time
 #window
 window = ui.Tk("start")
 window.configure(bg="grey")
-#canvas
+#canvas voor de hoeveelheid kinderen en bedden
 screen = ui.Canvas(window,
 width=400, height=150,
 bg="grey",bd=0, highlightthickness=0)
