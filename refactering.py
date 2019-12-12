@@ -4,7 +4,7 @@ import time
 #root window
 root = ui.Tk("start")
 root.configure(bg="grey")
-root.geometry("+800+520")
+root.geometry("+600+400")
 #canvas voor de hoeveelheid kinderen en bedden
 screen = ui.Canvas(root,
 width=400, height=150,
@@ -29,6 +29,8 @@ global count
 count = 0
 global aantal
 aantal = 0
+global checklist
+checklist = []
 #text
 text = ui.Label(screen,
 text="Hoeveel kinderen zijn er?",
@@ -67,54 +69,60 @@ def noteren(): #deze functie zal de waardes die ingevuld zijn aan een variable k
 def exit():#een knop die de window sluit
     root.quit()
 def click(event):
-    # bed.place(x=event.x,y=event.y)
-    # layout_beds.unbind("<Button-1>")
     global count
-    # print("count is",count)
-    # print("bedden is",int(bedden))
     if count < int(bedden):
         var_beds = "bed" + str(count)
         globals()[var_beds].place(x=event.x,y=event.y)
         count += 1
         print("bedden",int(bedden))
         print("count:",count)
+        layout_beds.unbind("<Button-1>")
 
 def back():
     global count, aantal
-    print("bedden",int(bedden))
-    print("count:",count)
-    count -= 1
-    aantal -= 1
-    print("nieuwe count",count)
-    lolol = "bed"+str(count)
-    print(lolol)
-    globals()[lolol].place_forget()
+    if count != 0 and aantal !=0:
+        print("bedden",int(bedden))
+        print("count:",count)
+        count -= 1
+        aantal -= 1
+        print("nieuwe count",count)
+        lolol = "bed"+str(count)
+        print(lolol)
+        globals()[lolol].place_forget()
+    else:
+        pass
 def toevoegen_rechtop():
-    global aantal
+    global aantal,checklist
     layout_beds.bind("<Button-1>",click)
-    layout_beds.bind("<Button-3>",cancel)
     if aantal < int(bedden):
         bed_lol = "bed" + str(aantal)
-        globals() [bed_lol] = ui.Canvas(layout_beds,bg="black",width=50,height=100,)
-        globals()[bed_lol].configure(width=50,height=100)
-
+        if bed_lol not in checklist:
+            checklist.append(bed_lol)
+            globals() [bed_lol] = ui.Canvas(layout_beds,bg="black",width=50,height=100,)
+            aantal+=1
+        else:
+            globals()[bed_lol].configure(width=50,height=100)
+            aantal+=1
 def toevoegen():
-    global aantal
+    global aantal,checklist
     layout_beds.bind("<Button-1>",click)
     if aantal < int(bedden):
         bed_lol = "bed" + str(aantal)
-        globals() [bed_lol] = ui.Canvas(layout_beds,bg="black",width=100,height=50,)
-        aantal += 1
-        globals()[bed_lol].configure(width=100,height=50)
-def cancel():
-    layout_beds.unbind("<Button-1>")    
+        if bed_lol not in checklist:
+            checklist.append(bed_lol)
+            globals() [bed_lol] = ui.Canvas(layout_beds,bg="black",width=100,height=50,)
+            aantal += 1
+        else:
+            globals()[bed_lol].configure(width=100,height=50)
+            aantal += 1    
 #widgets
 volgende = ui.Button(root,text="volgende",command=noteren, width=7)
 sluit_knop = ui.Button(root,text="sluiten",command=exit,width=7)
 bed_toevoegen = ui.Button(layout_beds,text="+",command=toevoegen,width=2,height=1)
 bed_toevoegen_rechtop = ui.Button(layout_beds,text="+",command=toevoegen_rechtop,width=2,height=1)
 stap_terug = ui.Button(layout_beds, text="stap terug",command=back,height=1)
-# stop_knop = ui.Button(layout_beds,text="stop plaatsen",command=cancel,height=1)
+text2 = ui.Label(layout_beds,text="staand",bg="grey")
+text3 = ui.Label(layout_beds,text="liggend",bg="grey")
 #plaatsen
 volgende.pack()
 sluit_knop.pack(side='bottom')
@@ -122,9 +130,11 @@ text.grid(row=0,sticky="E")
 text1.grid(row=1,sticky="E")
 hvl_kinderen.grid(row=0,column=1,sticky="E")
 hvl_bedden.grid(row=1,column=1,sticky="E")
-bed_toevoegen.place(x=20,y=20)
-bed_toevoegen_rechtop.place(x=50,y=20)
-stap_terug.place(x=80,y=20)
+bed_toevoegen.place(x=10,y=20)
+bed_toevoegen_rechtop.place(x=70,y=20)
+stap_terug.place(x=430,y=20)
+text2.place(x=65,y=5)
+text3.place(x=5,y=5)
 # stop_knop.place(x=200,y=20)
 #binds
 
